@@ -1,7 +1,8 @@
 const router = require("express").Router();
 const User = require("../models/user.model");
-
-// Sign Up
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+// SIGN UP
 router.post("/sign-up", async (req, res) => {
     try {
         const { username, email, password, address } = req.body;
@@ -36,10 +37,11 @@ router.post("/sign-up", async (req, res) => {
                 .json({ message: "Password's length should be greater than 5" });
         }
 
+        const hashPassword = await bcrypt.hash(password, 10);
         const newUser = new User({
             username: username,
             email: email,
-            password: password,
+            password: hashPassword,
             address: address,
         });
         await newUser.save();
@@ -49,4 +51,37 @@ router.post("/sign-up", async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+
+// SIGN IN
+router.post("/sign-in", async (req, res) => {
+    try {
+        const { username, password } = req.body;
+        const existingUser = await User.findOne({ username });
+        if (!existingUser) {
+            return res.status(400).json({ message: "Invalid Credentials" });
+        }
+        await bcrypt.compare(password, existingUser.password,(err, data)=>{
+            if(data)
+            {
+                const authClaims = [
+                    {name: existingUser.username},
+                    {role: existingUser.role},
+                ];
+                const token = jwt.sign({authClaims}, "bookStore123",{
+                    expiresIn : "30d",
+
+                });
+                return res.status(200).json({ id: existingUser._id, role: existingUser.role, token: token });
+            }
+            else{
+                return res.status(400).json({ message: "Invalid Credentials" });
+            }
+        });
+
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 module.exports = router;
