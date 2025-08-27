@@ -2,6 +2,9 @@ const router = require("express").Router();
 const User = require("../models/user.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { authenticateToken } = require("./userAuth");
+require('dotenv').config();
+
 // SIGN UP
 router.post("/sign-up", async (req, res) => {
     try {
@@ -67,7 +70,7 @@ router.post("/sign-in", async (req, res) => {
                     {name: existingUser.username},
                     {role: existingUser.role},
                 ];
-                const token = jwt.sign({authClaims}, "bookStore123",{
+                const token = jwt.sign({authClaims}, process.env.ACCESS_TOKEN_SECRET,{
                     expiresIn : "30d",
 
                 });
@@ -83,5 +86,19 @@ router.post("/sign-in", async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+
+// GET USER INFORMATION
+router.get("/get-user-information",authenticateToken, async (req, res) => {
+    try {
+        const userId = req.headers;
+        const data = await User.findById(userId);
+                console.log("ID header:", userId);
+
+        return res.status(200).json(data);
+    }
+    catch (error) {
+        res.status(500).json({ message: "Internal server error" });
+    }
+    });
 
 module.exports = router;
