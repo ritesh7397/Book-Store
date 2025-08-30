@@ -9,7 +9,8 @@ const authenticateToken = (req, res, next) => {
         return res.status(401).json({ message: "Authentication token required" }); // if there isn't any token
     }
 
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+    // jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+            jwt.verify(token, "bookStore123", (err, user) => {
         if (err) {
             return res
                 .status(403)

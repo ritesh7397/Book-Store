@@ -92,8 +92,6 @@ router.get("/get-user-information",authenticateToken, async (req, res) => {
     try {
         const userId = req.headers;
         const data = await User.findById(userId);
-                console.log("ID header:", userId);
-
         return res.status(200).json(data);
     }
     catch (error) {
