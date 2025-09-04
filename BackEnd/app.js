@@ -20,7 +20,7 @@ app.use('/api/user',userRoute);
 
 app.listen(PORT,()=> 
 {
-    console.log(`Server started at Port ${PORT}`)
+    console.log(`Server Started at Port ${PORT}`)
 });
 
 
