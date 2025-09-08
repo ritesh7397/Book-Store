@@ -13,7 +13,8 @@ app.get('/',(req,res) =>
     res.send('BookStore Project')
 
 })
-// routes
+
+// ROUTES
 const userRoute = require('./routes/user.route');
 app.use('/api/user',userRoute);
 

@@ -3,14 +3,14 @@ require('dotenv').config();
 
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers["authorization"];
-    const token = authHeader && authHeader.split(' ')[1];
+    const token = authHeader && authHeader.split(' ')[1]; // Bearer (token)
 
     if (token == null) {
         return res.status(401).json({ message: "Authentication token required" }); // if there isn't any token
     }
 
-    // jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-            jwt.verify(token, "bookStore123", (err, user) => {
+    // jwt.verify(token, "bookStore123", (err, user) => {
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
         if (err) {
             return res
                 .status(403)
