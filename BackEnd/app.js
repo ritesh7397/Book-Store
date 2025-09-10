@@ -19,6 +19,9 @@ const userRoute = require('./routes/user.route');
 app.use('/api/user',userRoute);
 
 
+const bookRoute = require("./routes/book.route");
+app.use('/api/book', bookRoute);
+
 app.listen(PORT,()=> 
 {
     console.log(`Server Started at Port ${PORT}`)
