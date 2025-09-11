@@ -16,11 +16,18 @@ app.get('/',(req,res) =>
 
 // ROUTES
 const userRoute = require('./routes/user.route');
-app.use('/api/user',userRoute);
-
-
 const bookRoute = require("./routes/book.route");
+const favouriteRoute = require('./routes/favourites.route');
+const cartRoute = require("./routes/cart.route")
+const orderRoute = require("./routes/order.route");
+
+
+
+app.use('/api/user',userRoute);
 app.use('/api/book', bookRoute);
+app.use('/api/user', favouriteRoute);
+app.use('/api/user', cartRoute);
+app.use('/api/user', orderRoute);
 
 app.listen(PORT,()=> 
 {
