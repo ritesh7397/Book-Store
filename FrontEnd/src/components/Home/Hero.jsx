@@ -3,6 +3,7 @@ import img from '../../assets/img.png'
 const Hero = () => {
   return (
     <div className='h-[75vh] flex'>
+      {/* RIGHT SIDE */}
       <div className='w-full lg:w-3/6 flex flex-col items-center lg:items-start justify-center'>
         <h1 className='text-4xl lg:text-6xl font-semibold text-yellow-100 text-center lg:text-left'>
           A World of Books Waiting for You       
@@ -17,9 +18,9 @@ const Hero = () => {
           </button>
         </div>
       </div>
+      {/* LEFT SIDE */}
       <div className='w-full lg:w-3/6 h-auto lg:h-[100% flex items-center justify-center'>
         <img src={img} alt="hero"/>
-        
       </div>
     </div>
   )
