@@ -1,11 +1,12 @@
 const express = require('express'); 
 const app = express(); 
+const cors = require('cors');
+
 require('dotenv').config();
 const URI = require('./connection/conn');
-
 const PORT = process.env.PORT || 4001;
 
-
+app.use(cors());
 app.use(express.json());
 
 app.get('/',(req,res) =>
@@ -20,7 +21,6 @@ const bookRoute = require("./routes/book.route");
 const favouriteRoute = require('./routes/favourites.route');
 const cartRoute = require("./routes/cart.route")
 const orderRoute = require("./routes/order.route");
-
 
 
 app.use('/api/user',userRoute);
