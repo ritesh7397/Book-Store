@@ -9,6 +9,7 @@ import SignUp from './pages/SignUp';
 import{BrowserRouter as Router, Routes, Route}from "react-router-dom"
 import Cart from './pages/Cart';
 import Profile from './pages/Profile';
+import ViewBookDetails from './components/ViewBookDetails/ViewBookDetails';
 const App = () => {
   return (
       <div>
@@ -21,7 +22,7 @@ const App = () => {
             <Route path="/profile" element={<Profile/>}/>
             <Route path="/LogIn" element={<LogIn/>}/>
             <Route path="/SignUp" element={<SignUp/>}/>
-
+            <Route path='view-book-details/:id'element={<ViewBookDetails/>}/>
           </Routes>
           <Footer/>
         </Router>
