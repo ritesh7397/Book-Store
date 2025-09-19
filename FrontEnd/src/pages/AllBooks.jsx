@@ -17,8 +17,9 @@ const AllBooks = () => {
   return (
     <div className='bg-zinc-900 h-auto px-12 py-8'>
       <h4 className='text-3xl text-yellow-100'>All books</h4>
+      {/* If there any issue in api, Loader will be shown */}
       {!Data && (
-        <div className='flex items-center justify-center my-8'>
+        <div className='h-screen bg-zinc-900 flex items-center justify-center'>
           <Loader />{""}
         </div>
       )}
