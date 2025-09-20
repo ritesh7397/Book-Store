@@ -6,14 +6,13 @@ import AllBooks from './pages/AllBooks';
 import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
 
-import{BrowserRouter as Router, Routes, Route}from "react-router-dom"
+import{Routes, Route}from "react-router-dom"
 import Cart from './pages/Cart';
 import Profile from './pages/Profile';
 import ViewBookDetails from './components/ViewBookDetails/ViewBookDetails';
 const App = () => {
   return (
       <div>
-        <Router>
           <Navbar/>
           <Routes>
             <Route exact path="/" element={<Home/>}/>
@@ -25,7 +24,6 @@ const App = () => {
             <Route path='view-book-details/:id'element={<ViewBookDetails/>}/>
           </Routes>
           <Footer/>
-        </Router>
     </div>
   );
 };

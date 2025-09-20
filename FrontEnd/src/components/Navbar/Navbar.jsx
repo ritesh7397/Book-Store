@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import book from '../../assets/book.png';
 import { Link } from 'react-router-dom';
 import { FaGripLines } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
   const links = [
@@ -22,6 +23,13 @@ const Navbar = () => {
       link: '/profile' 
     },
 ];
+
+// With the help of redux we can hide profile and cart link when user is not logged in
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
+  if(isLoggedIn === false){
+      links.splice(2,2);
+    }
 
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
