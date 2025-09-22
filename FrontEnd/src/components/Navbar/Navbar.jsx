@@ -48,18 +48,32 @@ const Navbar = () => {
           {/* Desktop Links */}
           <div className="hidden md:flex gap-4">
             {links.map((item, index) => (
+            <div className='flex items-center'>
+            {item.title === "Profile" ? (
+              <Link
+                to={item.link}
+                key={index}
+                className="px-4 py-1 border border-blue-500 rounded hover:bg-white hover:text-zinc-800 transition-all duration-300"
+              >
+                {item.title}
+              </Link> 
+              ): (
               <Link
                 to={item.link}
                 key={index}
                 className="hover:text-blue-500 transition-all duration-300"
               >
-                {item.title}
+                {item.title} {" "}
               </Link>
+              )}
+            </div>
             ))}
           </div>
 
           {/* Desktop Auth Buttons */}
-          <div className="hidden md:flex gap-4">
+          {
+          isLoggedIn === false && 
+              <div className="hidden md:flex gap-4">
             <Link
               to="/Login"
               className="px-4 py-1 border border-blue-500 rounded hover:bg-white hover:text-zinc-800 transition-all duration-300"
@@ -73,6 +87,7 @@ const Navbar = () => {
               SignUp
             </Link>
           </div>
+          }
 
           {/* Mobile Menu Icon */}
           <button
@@ -97,7 +112,10 @@ const Navbar = () => {
               {item.title}
             </Link>
           ))}
-
+          
+          {isLoggedIn === false && (
+          <>
+            
           <Link
             to="/Login"
             className="px-8 mb-8 text-3xl font-semibold py-2 border border-blue-500 rounded hover:bg-white text-white hover:text-zinc-800 transition-all duration-300"
@@ -112,6 +130,8 @@ const Navbar = () => {
           >
             SignUp
           </Link>
+          </>)}
+
         </div>
       )}
     </>
