@@ -6,30 +6,30 @@ import { useSelector } from 'react-redux';
 
 const Navbar = () => {
   const links = [
-    { 
-      title: 'Home', 
-      link: '/' 
+    {
+      title: 'Home',
+      link: '/'
     },
-    { 
-      title: 'All Books', 
+    {
+      title: 'All Books',
       link: '/all-books'
     },
-    { 
+    {
       title: 'Cart',
-       link: '/cart'
+      link: '/cart'
     },
-    { 
-      title: 'Profile', 
-      link: '/profile' 
+    {
+      title: 'Profile',
+      link: '/profile'
     },
-];
+  ];
 
-// With the help of redux we can hide profile and cart link when user is not logged in
+  // With the help of redux we can hide profile and cart link when user is not logged in
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
-  if(isLoggedIn === false){
-      links.splice(2,2);
-    }
+  if (isLoggedIn === false) {
+    links.splice(2, 2);
+  }
 
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
@@ -48,45 +48,45 @@ const Navbar = () => {
           {/* Desktop Links */}
           <div className="hidden md:flex gap-4">
             {links.map((item, index) => (
-            <div className='flex items-center'>
-            {item.title === "Profile" ? (
-              <Link
-                to={item.link}
-                key={index}
-                className="px-4 py-1 border border-blue-500 rounded hover:bg-white hover:text-zinc-800 transition-all duration-300"
-              >
-                {item.title}
-              </Link> 
-              ): (
-              <Link
-                to={item.link}
-                key={index}
-                className="hover:text-blue-500 transition-all duration-300"
-              >
-                {item.title} {" "}
-              </Link>
-              )}
-            </div>
+              <div className='flex items-center'>
+                {item.title === "Profile" ? (
+                  <Link
+                    to={item.link}
+                    key={index}
+                    className="px-4 py-1 border border-blue-500 rounded hover:bg-white hover:text-zinc-800 transition-all duration-300"
+                  >
+                    {item.title}
+                  </Link>
+                ) : (
+                  <Link
+                    to={item.link}
+                    key={index}
+                    className="hover:text-blue-500 transition-all duration-300"
+                  >
+                    {item.title} {" "}
+                  </Link>
+                )}
+              </div>
             ))}
           </div>
 
           {/* Desktop Auth Buttons */}
           {
-          isLoggedIn === false && 
-              <div className="hidden md:flex gap-4">
-            <Link
-              to="/Login"
-              className="px-4 py-1 border border-blue-500 rounded hover:bg-white hover:text-zinc-800 transition-all duration-300"
-            >
-              LogIn
-            </Link>
-            <Link
-              to="/SignUp"
-              className="px-4 py-1 bg-blue-500 rounded hover:bg-white hover:text-zinc-800 transition-all duration-300"
-            >
-              SignUp
-            </Link>
-          </div>
+            isLoggedIn === false &&
+            <div className="hidden md:flex gap-4">
+              <Link
+                to="/Login"
+                className="px-4 py-1 border border-blue-500 rounded hover:bg-white hover:text-zinc-800 transition-all duration-300"
+              >
+                LogIn
+              </Link>
+              <Link
+                to="/SignUp"
+                className="px-4 py-1 bg-blue-500 rounded hover:bg-white hover:text-zinc-800 transition-all duration-300"
+              >
+                SignUp
+              </Link>
+            </div>
           }
 
           {/* Mobile Menu Icon */}
@@ -112,25 +112,25 @@ const Navbar = () => {
               {item.title}
             </Link>
           ))}
-          
+
           {isLoggedIn === false && (
-          <>
-            
-          <Link
-            to="/Login"
-            className="px-8 mb-8 text-3xl font-semibold py-2 border border-blue-500 rounded hover:bg-white text-white hover:text-zinc-800 transition-all duration-300"
-            onClick={() => setIsMobileNavOpen(false)}
-          >
-            LogIn
-          </Link>
-          <Link
-            to="/SignUp"
-            className="px-8 mb-8 text-3xl font-semibold py-2 bg-blue-500 rounded hover:bg-white hover:text-zinc-800 transition-all duration-300"
-            onClick={() => setIsMobileNavOpen(false)}
-          >
-            SignUp
-          </Link>
-          </>)}
+            <>
+
+              <Link
+                to="/Login"
+                className="px-8 mb-8 text-3xl font-semibold py-2 border border-blue-500 rounded hover:bg-white text-white hover:text-zinc-800 transition-all duration-300"
+                onClick={() => setIsMobileNavOpen(false)}
+              >
+                LogIn
+              </Link>
+              <Link
+                to="/SignUp"
+                className="px-8 mb-8 text-3xl font-semibold py-2 bg-blue-500 rounded hover:bg-white hover:text-zinc-800 transition-all duration-300"
+                onClick={() => setIsMobileNavOpen(false)}
+              >
+                SignUp
+              </Link>
+            </>)}
 
         </div>
       )}
