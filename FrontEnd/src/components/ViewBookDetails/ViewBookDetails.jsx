@@ -3,8 +3,11 @@ import Loader from '../Loader/Loader';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { GrLanguage } from 'react-icons/gr';
-import { FaHeart, FaShoppingCart,FaEdit, MdOutlineDelete } from 'react-icons/fa';
+import { FaHeart, FaShoppingCart,FaEdit } from 'react-icons/fa';
+import { MdOutlineDelete } from 'react-icons/md';
 import {useSelector} from "react-redux";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ViewBookDetails = () => {
     const { id } = useParams();
@@ -28,8 +31,33 @@ const ViewBookDetails = () => {
         fetch();
     }, []);
 
+    const headers = {
+    id: localStorage.getItem("id"),
+    authorization: `Bearer ${localStorage.getItem("token")}`,
+    bookid: id,
+  };
+    const handleFavourite = async() =>{
+        const response = await axios.put(
+          "http://localhost:4000/api/user/add-book-to-favourite", 
+          {},
+          {headers}
+        );
+        toast.success(response.data.message);
+    };
+
+
+    const handleCart = async() => {
+        const response = await axios.put("http://localhost:4000/api/user/add-to-cart",
+            {},
+            {headers}
+        );
+        toast.success(response.data.message);
+
+    };
+
     return (
         <>
+       <ToastContainer />
         {Data && (
           <div className='px-4 md:px-12 py-8 bg-zinc-900 flex flex-col lg:flex-row gap-8 items-start'>
             <div className=' w-full lg:w-3/6 '>
@@ -43,12 +71,16 @@ const ViewBookDetails = () => {
                  />
                 {
                  isLoggedIn === true && role === "user" && (
-                     <div className='flex flex-row lg:flex-col items-center justify-between lg:justify-start mt-8 lg:mt-0'>
-                    <button className='bg-white rounded lg:rounded-full text-3xl p-3 text-red-500 flex items-center justify-center'>
+                     <div className='flex flex-col md:flex-row lg:flex-col items-center justify-between lg:justify-start mt-8 lg:mt-0'>
+                    <button className='bg-white rounded lg:rounded-full text-3xl p-3 text-red-500 flex items-center justify-center' 
+                     onClick={handleFavourite}
+                     >
                         <FaHeart/> 
                         <span className='ms-4 block lg:hidden'>Favourites</span>
                     </button>
-                    <button className='text-white rounded lg:rounded-full text-3xl p-3 mt-0 lg:mt-8 bg-blue-500 flex items-center justify-center'>
+                    <button className='text-white rounded mt-8 md:mt-0 lg:rounded-full text-3xl p-3 lg:mt-8 bg-blue-500 flex items-center justify-center'
+                     onClick={handleCart}
+                    >
                         <FaShoppingCart/> 
                         <span className='ms-4 block lg:hidden'>Add to Cart</span>
                     </button>
@@ -56,12 +88,12 @@ const ViewBookDetails = () => {
                  )}
                  {
                    isLoggedIn === true && role === "admin" && (
-                     <div className='flex flex-row lg:flex-col items-center justify-between lg:justify-start mt-8 lg:mt-0'>
+                     <div className='flex flex-col md:flex-row lg:flex-col items-center justify-between lg:justify-start mt-8 lg:mt-0'>
                     <button className='bg-white rounded lg:rounded-full text-3xl p-3  flex items-center justify-center'>
                         <FaEdit/> 
                         <span className='ms-4 block lg:hidden'>Edit</span>
                     </button>
-                    <button className='text-red-500 rounded lg:rounded-full text-3xl p-3 mt-0 lg:mt-8 bg-white flex items-center justify-center'>
+                    <button className='text-red-500 rounded lg:rounded-full text-3xl p-3 mt-8 md:mt-0 lg:mt-8 bg-white flex items-center justify-center'>
                         <MdOutlineDelete/>
                          <span className='ms-4 block lg:hidden'>Delete Book</span>
                     </button>

@@ -8,4 +8,4 @@ const UserOrderHistory = () => {
   )
 }
 
-export default UserOrderHistory
+export default UserOrderHistory;

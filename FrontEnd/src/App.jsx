@@ -14,6 +14,8 @@ import { authActions } from './store/auth';
 import Favourites from './components/Profile/Favourites';
 import UserOrderHistory from './components/Profile/UserOrderHistory';
 import Settings from './components/Profile/Settings';
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -32,6 +34,7 @@ const App = () => {
 
   return (
     <div>
+      <ToastContainer position="top-right" autoClose={3000} />
       <Navbar />
       <Routes>
         <Route exact path="/" element={<Home />} />
