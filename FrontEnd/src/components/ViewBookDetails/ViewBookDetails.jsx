@@ -57,7 +57,7 @@ const ViewBookDetails = () => {
 
     return (
         <>
-       <ToastContainer />
+      <ToastContainer position="top-right" autoClose={1000} />
         {Data && (
           <div className='px-4 md:px-12 py-8 bg-zinc-900 flex flex-col lg:flex-row gap-8 items-start'>
             <div className=' w-full lg:w-3/6 '>
