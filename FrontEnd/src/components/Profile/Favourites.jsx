@@ -11,7 +11,7 @@ const Favourites = () => {
   useEffect(() => {
     const fetch = async () => {
       const response = await axios.get(
-        "http://localhost:4000/api/user/get-favourite-books",
+        "https://bookstore-vbva.onrender.com/api/user/get-favourite-books",
         { headers }
       );
       setFavouriteBooks(response.data.data);
@@ -22,12 +22,12 @@ const Favourites = () => {
   return (
     <>
       {FavouriteBooks && FavouriteBooks?.length === 0 && (
-        <div className='text-5xl font-semibold h-[100%] text-zinc-500 flex items-center justify-center flex-col w-full'>
+        <div className='text-5xl font-semibold h-screen text-zinc-500 flex items-center justify-center flex-col w-full '>
           No Favourite Books
         </div>
       )}
 
-      <div className='grid grid-cols-4 gap-4'>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
 
         {FavouriteBooks &&
           FavouriteBooks.map((items, i) => (

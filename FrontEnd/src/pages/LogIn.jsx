@@ -34,7 +34,7 @@ const Login = () => {
       }
       else {
         const response = await axios.post(
-          "http://localhost:4000/api/user/sign-in", 
+          "https://bookstore-vbva.onrender.com/api/user/sign-in", 
           Values
         );
         dispatch(authActions.login());
@@ -88,7 +88,7 @@ const Login = () => {
           </div>
 
           <div className='mt-4'>
-            <button className='w-full bg-blue-500 text-white font-semibold py-2 rounded hover:bg-blue-600' onClick={submit}>
+            <button className='w-full bg-blue-500 text-white font-semibold py-2 rounded hover:bg-blue-600 transition-all duration-300' onClick={submit}>
               LogIn
             </button>
           </div>

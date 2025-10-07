@@ -7,7 +7,7 @@ const AllBooks = () => {
   const [Data, setData] = useState();
   useEffect(() => {
     const fetch = async () => {
-      const response = await axios.get("http://localhost:4000/api/book/get-all-books");
+      const response = await axios.get("https://bookstore-vbva.onrender.com/api/book/get-all-books");
       // console.log(response.data.data);
       setData(response.data.data);
     };

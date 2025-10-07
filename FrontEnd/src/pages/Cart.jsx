@@ -21,7 +21,7 @@ const Cart = () => {
   useEffect(() => {
     const fetch = async () => {
       const res = await axios.get(
-        "http://localhost:4000/api/user/get-user-cart",
+        "https://bookstore-vbva.onrender.com/api/user/get-user-cart",
         { headers }
       );
 
@@ -32,7 +32,7 @@ const Cart = () => {
 
   const deleteItem = async (bookid) => {
     const response = await axios.put(
-      `http://localhost:4000/api/user/remove-from-cart/${bookid}`,
+      `https://bookstore-vbva.onrender.com/api/user/remove-from-cart/${bookid}`,
       {},
       { headers }
     );
@@ -58,7 +58,7 @@ const PlaceOrder = async () => {
     }));
 
     const response = await axios.post(
-      "http://localhost:4000/api/user/place-order",
+      "https://bookstore-vbva.onrender.com/api/user/place-order",
       { order: formattedCart },
       { headers }
     );

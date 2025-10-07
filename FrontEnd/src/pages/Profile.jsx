@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import axios from 'axios';
 import Loader from '../components/Loader/Loader';
+import MobileNav from '../components/Profile/MobileNav';
 
 const Profile = () => {
   // const isLoggedIn = useSelector();
@@ -19,7 +20,7 @@ const Profile = () => {
   useEffect(() => {
     const fetch = async () => {
       const response = await axios.get(
-        "http://localhost:4000/api/user/get-user-information",
+        "https://bookstore-vbva.onrender.com/api/user/get-user-information",
         { headers }
       );
       setProfile(response.data);
@@ -37,10 +38,12 @@ const Profile = () => {
           </div>
         </div>
       )}
+
       {Profile && (
         <>
-          <div className="w-full md:w-1/6 h-screen">
+          <div className="w-full md:w-1/6 h-auto lg:h-screen">
             <Sidebar data={Profile} />
+            <MobileNav/>
           </div>
           <div className="w-full md:w-5/6">
             <Outlet />

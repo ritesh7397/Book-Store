@@ -32,7 +32,7 @@ const SignUp = () => {
       }
       else {
         const response = await axios.post(
-          "http://localhost:4000/api/user/sign-up",
+          "https://bookstore-vbva.onrender.com/api/user/sign-up",
            Values
         );
         toast.success(response.data.message || "Registration successful!");

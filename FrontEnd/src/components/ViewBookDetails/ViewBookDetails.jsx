@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Loader from '../Loader/Loader';
-import { useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { GrLanguage } from 'react-icons/gr';
 import { FaHeart, FaShoppingCart,FaEdit } from 'react-icons/fa';
@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const ViewBookDetails = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [Data, setData] = useState();
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
     const role = useSelector((state) => state.auth.role);
@@ -19,7 +20,7 @@ const ViewBookDetails = () => {
     useEffect(() => {
         const fetch = async () => {
             try{
-            const response = await axios.get(`http://localhost:4000/api/book/get-book-by-id/${id}`);
+            const response = await axios.get(`https://bookstore-vbva.onrender.com/api/book/get-book-by-id/${id}`);
             // console.log(response.data.data);
             // console.log(response);
             setData(response.data.data);
@@ -38,7 +39,7 @@ const ViewBookDetails = () => {
   };
     const handleFavourite = async() =>{
         const response = await axios.put(
-          "http://localhost:4000/api/user/add-book-to-favourite", 
+          "https://bookstore-vbva.onrender.com/api/user/add-book-to-favourite", 
           {},
           {headers}
         );
@@ -47,7 +48,7 @@ const ViewBookDetails = () => {
 
 
     const handleCart = async() => {
-        const response = await axios.put("http://localhost:4000/api/user/add-to-cart",
+        const response = await axios.put("https://bookstore-vbva.onrender.com/api/user/add-to-cart",
             {},
             {headers}
         );
@@ -55,11 +56,20 @@ const ViewBookDetails = () => {
 
     };
 
+    const deleteBook = async () =>{
+        const response = await axios.delete(
+           "https://bookstore-vbva.onrender.com/api/book/delete-book",
+           {headers}
+        );
+        alert(response.data.message);
+        navigate("/all-books")
+    }
+
     return (
         <>
-      <ToastContainer position="top-right" autoClose={1000} />
         {Data && (
           <div className='px-4 md:px-12 py-8 bg-zinc-900 flex flex-col lg:flex-row gap-8 items-start'>
+          <ToastContainer position="top-right" autoClose={1000} />
             <div className=' w-full lg:w-3/6 '>
                 {" "}
                <div className='flex flex-col lg:flex-row justify-around bg-zinc-800 p-12 rounded'>
@@ -89,11 +99,18 @@ const ViewBookDetails = () => {
                  {
                    isLoggedIn === true && role === "admin" && (
                      <div className='flex flex-col md:flex-row lg:flex-col items-center justify-between lg:justify-start mt-8 lg:mt-0'>
-                    <button className='bg-white rounded lg:rounded-full text-3xl p-3  flex items-center justify-center'>
+                            <ToastContainer position="top-right" autoClose={1000} />
+
+                    <Link
+                      to={`/updateBook/${id}`}
+                      className='bg-white rounded lg:rounded-full text-3xl p-3  flex items-center justify-center'>
                         <FaEdit/> 
                         <span className='ms-4 block lg:hidden'>Edit</span>
-                    </button>
-                    <button className='text-red-500 rounded lg:rounded-full text-3xl p-3 mt-8 md:mt-0 lg:mt-8 bg-white flex items-center justify-center'>
+                    </Link>
+                    <button 
+                      className='text-red-500 rounded lg:rounded-full text-3xl p-3 mt-8 md:mt-0 lg:mt-8 bg-white flex items-center justify-center'
+                      onClick={deleteBook}
+                    >
                         <MdOutlineDelete/>
                          <span className='ms-4 block lg:hidden'>Delete Book</span>
                     </button>

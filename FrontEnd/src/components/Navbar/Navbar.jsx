@@ -5,33 +5,25 @@ import { FaGripLines } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 
 const Navbar = () => {
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const role = useSelector((state) => state.auth.role);
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+
+  // Dynamically build the links array based on login status and role
   const links = [
-    {
-      title: 'Home',
-      link: '/'
-    },
-    {
-      title: 'All Books',
-      link: '/all-books'
-    },
-    {
-      title: 'Cart',
-      link: '/cart'
-    },
-    {
-      title: 'Profile',
-      link: '/profile'
-    },
+    { title: 'Home', link: '/' },
+    { title: 'All Books', link: '/all-books' },
   ];
 
-  // With the help of redux we can hide profile and cart link when user is not logged in
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  if (isLoggedIn) {
+    links.push({ title: 'Cart', link: '/cart' });
 
-  if (isLoggedIn === false) {
-    links.splice(2, 2);
+    if (role === 'admin') {
+      links.push({ title: 'Admin Profile', link: '/profile' });
+    } else {
+      links.push({ title: 'Profile', link: '/profile' });
+    }
   }
-
-  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
   return (
     <>
@@ -48,11 +40,10 @@ const Navbar = () => {
           {/* Desktop Links */}
           <div className="hidden md:flex gap-4">
             {links.map((item, index) => (
-              <div className='flex items-center'>
-                {item.title === "Profile" ? (
+              <div className='flex items-center' key={index}>
+                {(item.title === 'Profile' || item.title === 'Admin Profile') ? (
                   <Link
                     to={item.link}
-                    key={index}
                     className="px-4 py-1 border border-blue-500 rounded hover:bg-white hover:text-zinc-800 transition-all duration-300"
                   >
                     {item.title}
@@ -60,10 +51,9 @@ const Navbar = () => {
                 ) : (
                   <Link
                     to={item.link}
-                    key={index}
                     className="hover:text-blue-500 transition-all duration-300"
                   >
-                    {item.title} {" "}
+                    {item.title}
                   </Link>
                 )}
               </div>
@@ -71,8 +61,7 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Auth Buttons */}
-          {
-            isLoggedIn === false &&
+          {!isLoggedIn && (
             <div className="hidden md:flex gap-4">
               <Link
                 to="/Login"
@@ -87,7 +76,7 @@ const Navbar = () => {
                 SignUp
               </Link>
             </div>
-          }
+          )}
 
           {/* Mobile Menu Icon */}
           <button
@@ -113,9 +102,8 @@ const Navbar = () => {
             </Link>
           ))}
 
-          {isLoggedIn === false && (
+          {!isLoggedIn && (
             <>
-
               <Link
                 to="/Login"
                 className="px-8 mb-8 text-3xl font-semibold py-2 border border-blue-500 rounded hover:bg-white text-white hover:text-zinc-800 transition-all duration-300"
@@ -130,8 +118,8 @@ const Navbar = () => {
               >
                 SignUp
               </Link>
-            </>)}
-
+            </>
+          )}
         </div>
       )}
     </>
